@@ -4,7 +4,7 @@ import 'package:iso8583/iso8583.dart';
 
 void main() {
   group('iso 8583 test', () {
-    MessageTypeIndicator mti;
+    MessageTypeIndicator? mti;
     setUp(() {
       mti = MessageTypeIndicator(
         MessageVersion.Iso1987,

@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart' show IterableExtension;
+
 enum MessageOrigin {
   Acquirer,
   AcquirerRepeat,
@@ -23,10 +25,9 @@ const _valueMap = const {
   MessageOrigin.Reserved9: 9,
 };
 MessageOrigin originFromCode(String code) => _valueMap.entries
-    .firstWhere((element) => element.value.toString() == code,
-        orElse: () => null)
+    .firstWhereOrNull((element) => element.value.toString() == code)!
     .key;
 
 extension MessageOriginExtintion on MessageOrigin {
-  int get code => _valueMap[this];
+  int? get code => _valueMap[this];
 }

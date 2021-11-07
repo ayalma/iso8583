@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart' show IterableExtension;
+
 const _valueMap = const {
   MessageVersion.Iso1987: 0,
   MessageVersion.Iso1993: 1,
@@ -25,10 +27,9 @@ enum MessageVersion {
 }
 
 MessageVersion versionFromCode(String code) => _valueMap.entries
-    .firstWhere((element) => element.value.toString() == code,
-        orElse: () => null)
+    .firstWhereOrNull((element) => element.value.toString() == code)!
     .key;
 
 extension VersionExtintion on MessageVersion {
-  int get code => _valueMap[this];
+  int? get code => _valueMap[this];
 }

@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart' show IterableExtension;
+
 enum MessageFunction {
   Request,
   RequestResponse,
@@ -24,10 +26,9 @@ const _valueMap = const {
   MessageFunction.Reserved9: 9,
 };
 MessageFunction functionFromCode(String code) => _valueMap.entries
-    .firstWhere((element) => element.value.toString() == code,
-        orElse: () => null)
+    .firstWhereOrNull((element) => element.value.toString() == code)!
     .key;
 
 extension MessageFunctionExtintion on MessageFunction {
-  int get code => _valueMap[this];
+  int? get code => _valueMap[this];
 }

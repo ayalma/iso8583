@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart' show IterableExtension;
+
 enum MessageClass {
   Reserved0,
   Authoization,
@@ -24,10 +26,9 @@ const _valueMap = const {
   MessageClass.Reserved9: 9,
 };
 MessageClass classFromCode(String code) => _valueMap.entries
-    .firstWhere((element) => element.value.toString() == code,
-        orElse: () => null)
+    .firstWhereOrNull((element) => element.value.toString() == code)!
     .key;
 
 extension MessageClassExtintion on MessageClass {
-  int get code => _valueMap[this];
+  int? get code => _valueMap[this];
 }

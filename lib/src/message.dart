@@ -6,7 +6,7 @@ import 'package:iso8583/src/mti/mti.dart';
 import 'fields.dart';
 
 class Message {
-  MessageTypeIndicator mti;
+  MessageTypeIndicator? mti;
   Map<Fields, String> _dataElements = Map();
 
   Message();
@@ -26,13 +26,13 @@ class Message {
     for (var i = 0; i < binary.length; i++) {
       if (binary[i] == '1') {
         final field = fieldFromCode(i + 1);
-        final fieldData = field.data;
+        final fieldData = field.data!;
         if (fieldData.isFixed) {
           message.addFieldValue(
               field, messageString.substring(offsset, offsset + fieldData.len));
           offsset += fieldData.len;
         } else {
-          var formatLength = fieldData.format.length;
+          var formatLength = fieldData.format!.length;
           var fieldLenght = int.parse(
             messageString.substring(offsset, offsset + formatLength),
           );
@@ -62,7 +62,7 @@ class Message {
     Uint8List bitmapBytes = Uint8List(64);
 
     _dataElements.keys.forEach((to) {
-      bitmapBytes[to.data.no - 1] = 1;
+      bitmapBytes[to.data!.no - 1] = 1;
     });
     String bitmap = "";
     for (int i = 0; i < 16; i++) {
@@ -76,11 +76,11 @@ class Message {
     String body = "";
 
     _dataElements.forEach((key, value) {
-      if (key.data.isFixed) {
-        body += value.padLeft(key.data.len, '0');
+      if (key.data!.isFixed) {
+        body += value.padLeft(key.data!.len, '0');
       } else {
         body +=
-            "${value.length.toString().padLeft(key.data.format.length, '0')}$value";
+            "${value.length.toString().padLeft(key.data!.format!.length, '0')}$value";
       }
     });
     return body;

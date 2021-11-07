@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart' show IterableExtension;
+
 enum Fields {
   F1_Bitmap,
   F2_PAN,
@@ -70,7 +72,7 @@ class FieldsData {
   final String type;
   final int len;
   final bool isFixed;
-  final String format;
+  final String? format;
 
   const FieldsData(this.no, this.type, this.len, this.isFixed, this.format);
 }
@@ -145,9 +147,9 @@ const _valueMap = const {
 };
 
 Fields fieldFromCode(int no) => _valueMap.entries
-    .firstWhere((element) => element.value.no == no, orElse: () => null)
+    .firstWhereOrNull((element) => element.value.no == no)!
     .key;
 
 extension FieldsExtension on Fields {
-  FieldsData get data => _valueMap[this];
+  FieldsData? get data => _valueMap[this];
 }
