@@ -7,7 +7,7 @@ import 'fields.dart';
 
 class Message {
   MessageTypeIndicator? mti;
-  Map<Fields, String> _dataElements = Map();
+  Map<Fields, String> dataElements = Map();
 
   Message();
 
@@ -49,7 +49,7 @@ class Message {
   }
   void addFieldValue(Fields field, String value) {
     //validate and then add
-    _dataElements[field] = value;
+    dataElements[field] = value;
 
     //String res = _validate(tag, value.trim());
     //if (res == 'true')
@@ -61,7 +61,7 @@ class Message {
   String _bitmap() {
     Uint8List bitmapBytes = Uint8List(64);
 
-    _dataElements.keys.forEach((to) {
+    dataElements.keys.forEach((to) {
       bitmapBytes[to.data!.no - 1] = 1;
     });
     String bitmap = "";
@@ -75,7 +75,7 @@ class Message {
   String _body() {
     String body = "";
 
-    _dataElements.forEach((key, value) {
+    dataElements.forEach((key, value) {
       if (key.data!.isFixed) {
         body += value.padLeft(key.data!.len, '0');
       } else {
